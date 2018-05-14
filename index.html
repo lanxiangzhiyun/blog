@@ -146,6 +146,181 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-react" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/05/11/react/">react-redux一点就透</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/05/11/react/" class="archive-article-date">
+  	<time datetime="2018-05-11T07:49:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##react-redux一点就透</p>
+<blockquote>
+<ol>
+<li>目录</li>
+</ol>
+<ul>
+<li>redux简介</li>
+<li>案例</li>
+<li>react-redux核心介绍</li>
+</ul>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>redux简介</li>
+</ol>
+<ul>
+<li>redux是react全家桶的一员，它试图为 React 应用提供「可预测化的状态管理」机制。</li>
+<li>Redux是将整个应用状态存储到到一个地方，称为store<br>里面保存一棵状态树(state tree)</li>
+<li>组件可以派发(dispatch)行为(action)给store,而不是直接通知其它组件</li>
+<li>其它组件可以通过订阅store中的状态(state)来刷新自己的视图</li>
+</ul>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li>redux核心</li>
+</ol>
+<ul>
+<li>4.1 State<br>  state是数据集合<br>  可以理解为工厂加工商品所需的原材料      </li>
+<li>4.2 action<br>  State的变化，会导致View的变化。但是，用户接触不到 State，只能接触到View 所以，State的变化必须是 View导致的。<br>  action就是改变state的指令，有多少操作state的动作就会有多少action。<br>  可以将action理解为描述发生了什么的指示器</li>
+<li>4.3 reducer 加工函数<br>  action发出命令后将state放入reucer加工函数中，返回新的state。<br>  可以理解为加工的机器</li>
+<li>4.4 store<br>  store 可以理解为有多个加工机器的总工厂  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let store = createStore(reducers);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<pre><code>Store 就是把它们联系到一起的对象。Store 有以下职责：
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">维持应用的 state；</span><br><span class="line">提供 getState() 方法获取 state；</span><br><span class="line">提供 dispatch(action) 方法更新 state；</span><br><span class="line">通过 subscribe(listener) 注册监听器;</span><br><span class="line">通过 subscribe(listener) 返回的函数注销监听器。</span><br></pre></td></tr></table></figure>
+
+我们可以通过store.getState()来了解工厂中商品的状态，使用store.dispatch发送action指令。
+</code></pre><blockquote>
+<ol start="5">
+<li>经典案例<br> 这是一个redux的经典案例</li>
+</ol>
+</blockquote>
+<ul>
+<li>定义reducer函数根据action的类型改变state</li>
+<li>actions 定义指令</li>
+<li>通过createStore创建store</li>
+<li><p>调用store.dispatch()发出修改state的命令</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore &#125; from &apos;redux&apos;</span><br><span class="line"></span><br><span class="line">const reducer = (state = &#123;count: 0&#125;, action) =&gt; &#123;</span><br><span class="line">switch (action.type)&#123;</span><br><span class="line">    case &apos;INCREASE&apos;: return &#123;count: state.count + 1&#125;;</span><br><span class="line">    case &apos;DECREASE&apos;: return &#123;count: state.count - 1&#125;;</span><br><span class="line">    default: return state;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const actions = &#123;</span><br><span class="line">increase: () =&gt; (&#123;type: &apos;INCREASE&apos;&#125;),</span><br><span class="line">decrease: () =&gt; (&#123;type: &apos;DECREASE&apos;&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const store = createStore(reducer);</span><br><span class="line"></span><br><span class="line">store.subscribe(() =&gt;</span><br><span class="line">console.log(store.getState())</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">store.dispatch(actions.increase()) // &#123;count: 1&#125;</span><br><span class="line">store.dispatch(actions.increase()) // &#123;count: 2&#125;</span><br><span class="line">store.dispatch(actions.increase()) // &#123;count: 3&#125;</span><br></pre></td></tr></table></figure>
+<p>  我们可以直接在react component上使用store.dispatch，但是这样不太方便，这个时候我们需要react-redux</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Todos extends Component &#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">        return(</span><br><span class="line">            &lt;div onCLick=&#123;()=&gt;store.dispatch(actions.delTodo()) &#125;&gt;test&lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<ol start="6">
+<li>react-redux<br>Redux 官方提供的 React 绑定库。 具有高效且灵活的特性。</li>
+</ol>
+<ul>
+<li>6.1 安装<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save react-redux</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>6.2 核心</li>
+<li>&lt; Provider store&gt;</li>
+<li>connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])</li>
+</ul>
+<p>Provider 内的任何一个组件（比如这里的 Comp），如果需要使用 state 中的数据，就必须是「被 connect 过的」组件——使用 connect 方法对「你编写的组件（MyComp）」进行包装后的产物。<br>这个函数允许我们将 store 中的数据作为 props 绑定到组件上。<br>简单的流程如下图所示：<br><img src="https://user-gold-cdn.xitu.io/2018/5/7/16339a69e4c0b70e?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""><br>react-redux中的connect方法将store上的getState 和 dispatch 包装成组件的props。<br>将之前直接在组件上dispatch的代码修改为如下：<br>index.js<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import store from &apos;../store&apos;;</span><br><span class="line">import actions from &apos;../store/actions/list&apos;;</span><br><span class="line">import &#123;connect&#125; from &apos;react-redux&apos;;</span><br><span class="line"></span><br><span class="line">class Todos extends Component &#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">        return(</span><br><span class="line">            &lt;div onCLick=&#123;()=&gt;this.props.del_todo() &#125;&gt;test&lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default connect(</span><br><span class="line">    state=&gt;state,</span><br><span class="line">    actions</span><br><span class="line">)(Todos);</span><br></pre></td></tr></table></figure></p>
+<p>Provider 能拿到关键的store并传递给每个子组件</p>
+<ul>
+<li><ol start="7">
+<li>connect如何工作的？<br>connect() 接收四个参数，它们分别是 mapStateToProps ， mapDispatchToProps， mergeProps 和 options 。<br>7.1 <font color="red">mapStateToProps这个函数允许我们将 store 中的数据作为 props 绑定到组件上。</font><br>reducer.js<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">export default function (state = &#123; lists: [&#123;text:&apos;移动端计划&apos;&#125;],newType:&apos;all&apos;&#125;, action) &#123;</span><br><span class="line">    switch (action.type) &#123;</span><br><span class="line">        case types.ADD_TODO:</span><br><span class="line">            return &#123;...state,lists:[...state.lists,&#123;text:action.text&#125;]&#125;</span><br><span class="line">        case types.TOGGLE_TODO:</span><br><span class="line">            return &#123;...state,lists:state.lists.map((item,index)=&gt;&#123;</span><br><span class="line">                if(index == action.index)&#123;</span><br><span class="line">                    item.completed = !item.completed</span><br><span class="line">                &#125;</span><br><span class="line">                return item</span><br><span class="line">            &#125;)&#125;</span><br><span class="line">        case types.DEL_TODO:</span><br><span class="line">            return &#123;...state,lists:[...state.lists.slice(0,action.index),...state.lists.slice(action.index+1)]&#125;</span><br><span class="line">        case types.SWITCH_TYPE:</span><br><span class="line">            console.log(&#123;...state,newType:action.newType&#125;)</span><br><span class="line">            return &#123;...state,newType:action.newType&#125;</span><br><span class="line">        default:</span><br><span class="line">            return state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<p>在reducer.js中，定义了初始化的state，通过connect方法，我们就能使用this.props.lists拿到初始化的state。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import store from &apos;../store&apos;;</span><br><span class="line">import actions from &apos;../store/actions/list&apos;;</span><br><span class="line">import &#123;connect&#125; from &apos;react-redux&apos;;</span><br><span class="line"></span><br><span class="line">class Todos extends Component &#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">        return(</span><br><span class="line">            &#123;</span><br><span class="line">                + &lt;ul&gt;</span><br><span class="line">                +    this.props.state.lists.map(list =&gt;(</span><br><span class="line">                +        &lt;li&gt;&#123;list.text&#125;&lt;/li&gt;</span><br><span class="line">                +    ))</span><br><span class="line">                + &lt;/ul&gt;   </span><br><span class="line">            &#125;</span><br><span class="line">            &lt;div onCLick=&#123;()=&gt;this.props.del_todo() &#125;&gt;test&lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default connect(</span><br><span class="line">    state=&gt;state,</span><br><span class="line">    actions</span><br><span class="line">)(Todos);</span><br></pre></td></tr></table></figure></p>
+<p>当 state 变化，或者 ownProps 变化的时候，mapStateToProps 都会被调用，计算出一个新的 stateProps，（在与 ownProps merge 后）更新给 MyComp。</p>
+<ul>
+<li>7.2 mapDispatchToProps(dispatch, ownProps): dispatchProps connect 的第二个参数是 mapDispatchToProps，它的功能是，将 action 作为 props 绑定到 MyComp 上。<br>action.js<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import * as types from &quot;../action-types&quot;;</span><br><span class="line"></span><br><span class="line">export default&#123;</span><br><span class="line">    add_todo(text)&#123;</span><br><span class="line">        return &#123; type: types.ADD_TODO, text: text&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    del_todo(idx)&#123;</span><br><span class="line">        return &#123;type:types.DEL_TODO, index: idx&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    toggle_todo(index)&#123;</span><br><span class="line">        return &#123;type:types.TOGGLE_TODO, index&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    del_todo(index)&#123;</span><br><span class="line">        return &#123;type:types.DEL_TODO, index&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    switch_type(newType)&#123;</span><br><span class="line">        return &#123;type:types.SWITCH_TYPE, newType&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>我在action.js中定义的修改状态的命令，会通过connect 的 mapDispatchToProps方法变为props绑定在reac组件上。<br>我们可以方便得使用去调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div onCLick=&#123;()=&gt;this.props.del_todo() &#125;&gt;test&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><ol start="8">
+<li>深入<br>了解到这里，我们会发现并没有使用store.dispatch方法去发出命令，但是state已经修改，view也变化了，那么到底发生了什么？<br>store.dispatch(actions.increase())<br>关键的是connect()<br>connect原理简化版<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import React,&#123;Component&#125; from &apos;react&apos;;</span><br><span class="line">import &#123;bindActionCreators&#125; from &apos;redux&apos;;</span><br><span class="line">import propTypes from &apos;prop-types&apos;;</span><br><span class="line"></span><br><span class="line">export default function(mapStateToProps,mapDispatchToProps)&#123;</span><br><span class="line">   return function(WrapedComponent)&#123;</span><br><span class="line">      class ProxyComponent extends Component&#123;</span><br><span class="line">          static contextTypes = &#123;</span><br><span class="line">              store:propTypes.object</span><br><span class="line">          &#125;</span><br><span class="line">          constructor(props,context)&#123;</span><br><span class="line">            super(props,context);</span><br><span class="line">            this.store = context.store;</span><br><span class="line">            this.state = mapStateToProps(this.store.getState());</span><br><span class="line">          &#125;</span><br><span class="line">          componentWillMount()&#123;</span><br><span class="line">              this.unsubscribe = this.store.subscribe(()=&gt;&#123;</span><br><span class="line">                  this.setState(mapStateToProps(this.store.getState()));</span><br><span class="line">              &#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          componentWillUnmount()&#123;</span><br><span class="line">              this.unsubscribe();</span><br><span class="line">          &#125;</span><br><span class="line">          render()&#123;</span><br><span class="line">              let actions= &#123;&#125;;</span><br><span class="line">              if(typeof mapDispatchToProps == &apos;function&apos;)&#123;</span><br><span class="line">                actions = mapDispatchToProps(this.store.disaptch);</span><br><span class="line">              &#125;else if(typeof mapDispatchToProps == &apos;object&apos;)&#123;</span><br><span class="line">                  console.log(&apos;object&apos;, mapDispatchToProps)</span><br><span class="line">                actions = bindActionCreators(mapDispatchToProps,this.store.dispatch);</span><br><span class="line">              &#125;</span><br><span class="line">                return &lt;WrapedComponent &#123;...this.state&#125; &#123;...actions&#125;/&gt;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      return ProxyComponent;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<p>1.state的返回<br>connect中对于Provided父组件上传来的store,通过将状态返回<br>mapStateToProps(this.store.getState());<br>通过 Redux 的辅助函数 bindActionCreators()，用dispatch监听每一个action。<br> bindActionCreators(mapDispatchToProps,this.store.dispatch);<br>所以调用props上的方法时，会自动发起store.dispach（XXX）事件，发出命令<br>react-redux到这里分析结束，</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">react-redux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/blog/categories/react//" class="article-tag-list-link color1">react</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/05/11/react/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-awesome-frontend" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1465,6 +1640,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">react-redux</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
