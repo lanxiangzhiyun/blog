@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://lanxiangzhiyun.github.io/blog">
-  <title>从零收拾一个hybrid框架（一）-- 从选择JS通信方案开始 | 博客</title>
+  <title>杂记 | 博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="相信很多人都在项目里熟练使用各种Hybrid技术，无论是使用了知名得 WebViewJavascriptBridge 框架来做自己的Hybrid Web容器，又或是自己从头着手写了一个满足自己业务需求的bridge，从而构建起自己的Hybrid Web容器，也有的干脆直接使用了cordova 这一大型Hybrid容器框架，cordova + ionic 来进行Hybrid的开发 拆解学习框架源码是">
+  <meta name="description" content="XMLHttpRequest1234567891011var xhr = new XMLHttpRequest()xhr.onreadystatechange = function () &amp;#123;    // 这里的函数异步执行，可参考之前 JS 基础中的异步模块    if (xhr.readyState == 4) &amp;#123;        if (xhr.status == 200)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从零收拾一个hybrid框架（一）-- 从选择JS通信方案开始">
+<meta property="og:title" content="杂记">
 <meta property="og:url" content="https://lanxiangzhiyun.github.io/blog/2018/05/09/article01/index.html">
 <meta property="og:site_name" content="博客">
-<meta property="og:description" content="相信很多人都在项目里熟练使用各种Hybrid技术，无论是使用了知名得 WebViewJavascriptBridge 框架来做自己的Hybrid Web容器，又或是自己从头着手写了一个满足自己业务需求的bridge，从而构建起自己的Hybrid Web容器，也有的干脆直接使用了cordova 这一大型Hybrid容器框架，cordova + ionic 来进行Hybrid的开发 拆解学习框架源码是">
+<meta property="og:description" content="XMLHttpRequest1234567891011var xhr = new XMLHttpRequest()xhr.onreadystatechange = function () &amp;#123;    // 这里的函数异步执行，可参考之前 JS 基础中的异步模块    if (xhr.readyState == 4) &amp;#123;        if (xhr.status == 200)">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-10T05:57:32.000Z">
+<meta property="og:updated_time" content="2018-05-16T01:32:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从零收拾一个hybrid框架（一）-- 从选择JS通信方案开始">
-<meta name="twitter:description" content="相信很多人都在项目里熟练使用各种Hybrid技术，无论是使用了知名得 WebViewJavascriptBridge 框架来做自己的Hybrid Web容器，又或是自己从头着手写了一个满足自己业务需求的bridge，从而构建起自己的Hybrid Web容器，也有的干脆直接使用了cordova 这一大型Hybrid容器框架，cordova + ionic 来进行Hybrid的开发 拆解学习框架源码是">
+<meta name="twitter:title" content="杂记">
+<meta name="twitter:description" content="XMLHttpRequest1234567891011var xhr = new XMLHttpRequest()xhr.onreadystatechange = function () &amp;#123;    // 这里的函数异步执行，可参考之前 JS 基础中的异步模块    if (xhr.readyState == 4) &amp;#123;        if (xhr.status == 200)">
   
     <link rel="alternative" href="/atom.xml" title="博客" type="application/atom+xml">
   
@@ -155,7 +155,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      从零收拾一个hybrid框架（一）-- 从选择JS通信方案开始
+      杂记
     </h1>
   
 
@@ -168,14 +168,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>相信很多人都在项目里熟练使用各种Hybrid技术，无论是使用了知名得 WebViewJavascriptBridge 框架来做自己的Hybrid Web容器，又或是自己从头着手写了一个满足自己业务需求的bridge，从而构建起自己的Hybrid Web容器，也有的干脆直接使用了cordova 这一大型Hybrid容器框架，cordova + ionic 来进行Hybrid的开发</p>
-<p>拆解学习框架源码是一个好事，但是在拆解优秀框架源码的背后，如何将多个优秀源码的精华打碎重塑，结合自己的产品业务需求重新组合成为适合自己的，并且扎实掌握可以灵活修改自如控制的代码，这也算是另一个层面的提升</p>
+        <h3 id="XMLHttpRequest"><a href="#XMLHttpRequest" class="headerlink" title="XMLHttpRequest"></a>XMLHttpRequest</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var xhr = new XMLHttpRequest()</span><br><span class="line">xhr.onreadystatechange = function () &#123;</span><br><span class="line">    // 这里的函数异步执行，可参考之前 JS 基础中的异步模块</span><br><span class="line">    if (xhr.readyState == 4) &#123;</span><br><span class="line">        if (xhr.status == 200) &#123;</span><br><span class="line">            alert(xhr.responseText)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">xhr.open(&quot;GET&quot;, &quot;/api&quot;, false)</span><br><span class="line">xhr.send(null)...</span><br></pre></td></tr></table></figure>
+<p>xhr.status即 HTTP 状态码，有 2xx 3xx 4xx 5xx 这几种，比较常用的有以下几种：</p>
 <ul>
-<li>选择合适的JS通信方案（第一篇）</li>
-<li>实现基本的WebView容器能力（第二篇 待续）</li>
-<li>尝试拓展WebView容器的额外能力（第三篇 待续）</li>
+<li>200 正常</li>
+<li>3xx<ul>
+<li>301 永久重定向。如<a href="http://xxx.com这个" target="_blank" rel="noopener">http://xxx.com这个</a> GET 请求（最后没有/），就会被301到<a href="http://xxx.com/（最后是/）" target="_blank" rel="noopener">http://xxx.com/（最后是/）</a></li>
+<li>302 临时重定向。临时的，不是永久的</li>
+<li>304 资源找到但是不符合请求条件，不会返回任何主体。如发送 GET 请求时，head 中有If-Modified-Since: xxx（要求返回更新时间是xxx时间之后的资源），如果此时服务器 端资源未更新，则会返回304，即不符合要求</li>
 </ul>
-
+</li>
+<li>404 找不到资源</li>
+<li>5xx 服务器端出错了<br>看完要明白，为何上述代码中要同时满足xhr.readyState == 4和xhr.status == 200。</li>
+</ul>
+<h3 id="Fetch-API"><a href="#Fetch-API" class="headerlink" title="Fetch API"></a>Fetch API</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fetch(&apos;some/api/data.json&apos;, &#123;</span><br><span class="line">  method:&apos;POST&apos;, //请求类型 GET、POST</span><br><span class="line">  headers:&#123;&#125;, // 请求的头信息，形式为 Headers 对象或 ByteString</span><br><span class="line">  body:&#123;&#125;, //请求发送的数据 blob、BufferSource、FormData、URLSearchParams（get 或head 方法中不能包含 body）</span><br><span class="line">  mode:&apos;&apos;, //请求的模式，是否跨域等，如 cors、 no-cors 或 same-origin</span><br><span class="line">  credentials:&apos;&apos;, //cookie 的跨域策略，如 omit、same-origin 或 include</span><br><span class="line">  cache:&apos;&apos;, //请求的 cache 模式: default、no-store、reload、no-cache、 force-cache 或 only-if-cached</span><br><span class="line">&#125;).then(function(response) &#123; ... &#125;);...</span><br></pre></td></tr></table></figure>
       
 
       
