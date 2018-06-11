@@ -146,6 +146,93 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-react-vue-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/06/11/react-vue-update/">react_vue_update</a>
+    </h1>
+  
+
+        
+        <a href="/blog/2018/06/11/react-vue-update/" class="archive-article-date">
+  	<time datetime="2018-06-11T01:27:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="React和Vue的组件更新比较"><a href="#React和Vue的组件更新比较" class="headerlink" title="React和Vue的组件更新比较"></a>React和Vue的组件更新比较</h3><blockquote>
+<p>React组件的属性</p>
+</blockquote>
+<p>React是一个单纯的view层框架,官方推荐使用JSX预发来维护组件的状态.通过Props和state来共同决定组件的表现.</p>
+<ul>
+<li>Props<br>正如prop的英文意思[属性]一样,Props中的数据主要用来定义和描述组件的属性,该数据是由父组件在声明React组件的时候设置,就好比我们给一个img标签设置一个src属性一样,我们可以给自定义的React组件设置许多属性. 这些属性定义了React组件的表现形式,父组件可以通过修改Props中的属性来控制子组件的表现.</li>
+<li>state<br>同样的,state表示[状态],那么state中的数据主要用来控制组件内部的状态. 也就是说组件内部的变化,不需要同外部有交互的数据,都可以有组件自己通过state来控制.<br>React 虚拟树更新原则</li>
+</ul>
+<p>React中应用虚拟DOM来更新快速更新DOM,那么更新虚拟DOM的原则主要是以下几种:</p>
+<ul>
+<li>不同元素<br>如果更新前后是两种不同类型的DOM元素,那就没什么说的,直接销毁原来的节点,创建新的节点.(比如原来是div,更新为span)在这个过程中,原来节点的componentWillUnmount函数被触犯, 新节点的componentWillMount和componentDidMount依次被触发. 需要特别指出的是,当前更新节点的所有子节点都会被销毁重建,而不管子节点是否有更新. 简单的来说,就是根变了,那么这个根上的所有叶子都要更新了.</li>
+<li>相同元素,不同属性<br>当节点类型没有发生变化,而只是熟悉变化的话,React就智能多了,只会更新变化的部分. 好比是一个元素有多个CSS样式,如果只变化了一个样式,那么React也只更新一个. 当元素不是叶子节点的时候,也就是一个组件元素的时候,会继续深入的去比较子元素来更新子元素.<br>子元素变动.</li>
+<li>当子元素有变动的时候,React会更新子元素.<br>子元素的变动指的是资源的类型/属性/位置等的变动. 类型和属性的变动会触发更新,这个比较好理解.子元素的位置变动,指的是如果一个资源原来在第一位,更新后到第二位了,React会认为这是一种变动,从而触发更新.</li>
+<li>key属性的重要作用<br>这样看起来React也没有那么智能.那么这个时候就要引入一个很重要的key属性.React通过给子组件一个key属性.来唯一标识一个子组件,如果更新前后的组件key值一样,并且除了位置之外其他属性没有变化,那么就不会触发更新.</li>
+</ul>
+<blockquote>
+<p>Vue的数据</p>
+</blockquote>
+<p>Vue是一个传统意义上的mvc模型.通过实例化一个vue对象来绑定dom和data的关系,也就是绑定view和model.通过对model中每个属性添加[反射]来完成监视器的注册. 当model中的数据模型变化时,watcher会重新计算,从而引发view层的更新.</p>
+<p>这也就是理解了为什么Vue是单向数据流了</p>
+<ul>
+<li><p>Vue的更新.<br>  上面提到,vue的更新是model中数据的变化引发在初始化时注入的watcher的变化,从而引起view层的更新.只要观察到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。如果同一个 watcher 被多次触发，只会一次推入到队列中。</p>
+<p>  根据以上特点,我们知道vue中的组件更新是有model数据的更新引起的,因为view和model在初始化时已经完成绑定,所以当model发生变化时,哪些view需要变化已经很明确了,通过patch的diff算法进行virtual Dom的比较，依赖于虚拟DOM的生命钩子映射成真实Dom,所以就不需要像React那般去判断比对了.</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/blog/2018/06/11/react-vue-update/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-react" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1382,7 +1469,8 @@
 <h3 id="面试官-既然React-Vue可以用Event-Bus进行组件通信-你可以实现下吗"><a href="#面试官-既然React-Vue可以用Event-Bus进行组件通信-你可以实现下吗" class="headerlink" title="面试官:既然React/Vue可以用Event Bus进行组件通信,你可以实现下吗?"></a>面试官:既然React/Vue可以用Event Bus进行组件通信,你可以实现下吗?</h3><ul>
 <li><a href="https://juejin.im/post/5ac2fb886fb9a028b86e328c" target="_blank" rel="noopener">面试官:既然React/Vue可以用Event Bus进行组件通信,你可以实现下吗?</a></li>
 </ul>
-<h3 id="Webpack-最佳实践总结"><a href="#Webpack-最佳实践总结" class="headerlink" title="Webpack 最佳实践总结"></a>Webpack 最佳实践总结</h3><p>-<a href="https://segmentfault.com/a/1190000010815848" target="_blank" rel="noopener">Webpack 最佳实践总结</a><br><a href="#目录">⬆️ 返回首页</a></p>
+<h3 id="Webpack-最佳实践总结"><a href="#Webpack-最佳实践总结" class="headerlink" title="Webpack 最佳实践总结"></a>Webpack 最佳实践总结</h3><p>-<a href="https://segmentfault.com/a/1190000010815848" target="_blank" rel="noopener">Webpack 最佳实践总结</a></p>
+<p><a href="#目录">⬆️ 返回首页</a></p>
 
       
 
